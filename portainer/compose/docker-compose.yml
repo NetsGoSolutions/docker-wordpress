@@ -1,0 +1,24 @@
+version: '3'
+
+networks:
+  local:
+    external: false
+  global:
+    external: true
+
+services:
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    command: -H unix:///var/run/docker.sock
+    restart: always
+    networks:
+      - global
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DATA_DIR}/portainer:/data
+    labels:
+      - "traefik.http.routers.portainer_panel.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.portainer_panel.tls=true"
+      - "traefik.docker.network=global"
+      - "traefik.http.services.portainer_panel.loadbalancer.server.port=9000"

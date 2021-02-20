@@ -1,0 +1,24 @@
+version: '3'
+
+networks:
+  local:
+    external: false
+  global:
+    external: true
+
+services:
+
+  traefik:
+    image: traefik:v2.2
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - global
+      - local
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DATA_DIR}/traefik/traefik.toml:/etc/traefik/traefik.toml
