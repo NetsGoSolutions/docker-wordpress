@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  backuppc:
+    image: adferrand/backuppc
+    environment:
+      - BACKUPPC_UUID=1001
+      - BACKUPPC_GUID=1001
+      - TZ=Europe/Oslo
+    volumes:
+      - ${DATA_DIR}/backuppc/etc:/etc/backuppc
+      - ${DATA_DIR}/backuppc/home:/home/backuppc
+      - ${DATA_DIR}/backuppc/data:/data/backuppc
+      - ${DATA_DIR}/backuppc/archives:/archives
+      - ${DATA_DIR}/backuppc/linux-hosts:/etc/hosts

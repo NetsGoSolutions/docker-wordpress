@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  rclone:
+    image: rclone/rclone
+    command: sync /data backblaze:/netsgo-backups
+    # Web GUI --- command: rcd --rc-web-gui --rc-addr :5572 --rc-user test --rc-pass pass
+    environment:
+      - PHP_TZ=Europe/Oslo
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ./rclone:/config/rclone
+      - ${DATA_DIR}:/data:shared
